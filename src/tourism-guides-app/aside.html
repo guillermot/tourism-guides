@@ -1,0 +1,28 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="aside-element">
+    <template>
+        <style>
+            .content{
+                position: fixed;
+                right: 0px;
+                top: 0px;
+                width: 400px;
+                height: 100%;
+                background-color: white;
+            }
+        </style>
+
+    <div id="content">
+    </div>
+    </template>
+    <script>
+        class AsideElement extends Polymer.Element {
+            static get is() {
+                return 'aside-element';
+            }
+        }
+
+        window.customElements.define(AsideElement.is, AsideElement);
+    </script>
+</dom-module>
