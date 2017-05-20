@@ -1,20 +1,15 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/tourism-guides-app/g-map.html">
+<link rel="import" href="/src/tourism-guides-app/aside-element.html">
 
 <dom-module id="tourism-guides-app">
     <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
+    <g-map></g-map>
+    <aside-element>
+    </aside-element>
   </template>
 
     <script>
-        /**
-         * @customElement
-         * @polymer
-         */
         class TourismGuidesApp extends Polymer.Element {
             static get is() {
                 return 'tourism-guides-app';

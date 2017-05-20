@@ -1,0 +1,28 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="guide-card">
+    <template>
+        <style>
+        </style>
+        <div>
+            <div id="name">
+            </div>
+            <div id="description">
+            </div>
+        </div>
+    </template>
+    <script>
+        class GuideCard extends Polymer.Element {
+            static get is() {
+                return 'guide-list';
+            }
+
+
+
+            ready() {
+
+            }
+        }
+
+        window.customElements.define(GuideCard.is, GuideCard);
+    </script>
+</dom-module>

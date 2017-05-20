@@ -1,19 +1,23 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/tourism-guides-app/guide-list.html">
 
 <dom-module id="aside-element">
     <template>
         <style>
             .content{
                 position: fixed;
-                right: 0px;
+                left: 0px;
                 top: 0px;
                 width: 400px;
                 height: 100%;
                 background-color: white;
+                overflow: scroll;
             }
         </style>
 
-    <div id="content">
+    <div class="content" id="content">
+        <guide-list>
+        </guide-list>
     </div>
     </template>
     <script>
