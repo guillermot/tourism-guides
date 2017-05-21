@@ -2,34 +2,30 @@
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
 
 <dom-module id="guide-list">
-
-
     <template>
-        Guide list
+        Guide listss
+        <style>
+            .box { margin-left: 5px; margin-right: 5px; margin-bottom: 5px !important; cursor: pointer;}
+        </style>
+        <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
+        <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
         
         <template is="dom-repeat" items="[[guides]]"> 
-            <style>
-                .box { margin-left: 5px; margin-right: 5px; margin-bottom: 5px !important; }
-            </style>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
             
-            <div class="box">
+            <div class="box" on-click="onGuideClick">
                 <article class="media">
                     <div class="media-left">
                         <figure class="image is-64x64">
-                            <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image">
+                            <img src="[[item.img]]" alt="Image">
                         </figure>
                     </div>
                     <div class="media-content">
                         <div class="content">
-                            <a>
-                                <p>
-                                <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-                                <br>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                </p>
-                            </a>
+                            <p>
+                            <strong>[[item.name]]</strong> <small>@johnsmith</small> <small>31m</small>
+                            <br>
+                            [[item.description]]
+                            </p>
                         </div>
                         <nav class="level is-mobile">
                             <div class="level-left">
@@ -49,13 +45,18 @@
             </div>
         </template>
     </template>
-
     <script>
         class GuideList extends Polymer.Element {
 
             ready() {
                 super.ready();
-                console.log(this.guides);
+                this.guides = guidesList;
+            }
+
+            onGuideClick(event) {
+                this.dispatchEvent(new CustomEvent('guide-click', {
+                    detail: event.model.item
+                }));
             }
 
             static get is() {
@@ -64,22 +65,7 @@
 
             static get properties() {
                 return {
-                    guides: {
-                        type: Array,
-                        value: [{
-                            name: 'First visit!',
-                            description: 'All places you need to go in your first visit to New York.'
-                        }, {
-                            name: 'Central Park',
-                            description: 'This park is full of litles treasures to discover, each one of them will blow your mind.'
-                        }, {
-                            name: 'Downtown',
-                            description: 'One of the most important financial'
-                        }, {
-                            name: 'Neighborhoods',
-                            description: 'Most important neighborhoods of Manhattan. All the right places you should visit'
-                        }]
-                    }
+                    guides: {}
                 }
             }
         }

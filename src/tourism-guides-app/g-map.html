@@ -19,8 +19,26 @@
 
     <script>
         class GMap extends Polymer.Element {
-            static get is() {
-                return 'g-map';
+
+            addMarkers(marker) {
+
+                const coordinates = {
+                    lat: marker.lat,
+                    lng: marker.lng
+                };
+
+                var marker = new google.maps.Marker({
+                    position: coordinates,
+                    map: this.map,
+                    title: marker.title
+                });
+            }
+
+            markerPanTo(marker) {
+                this.map.panTo({
+                    lat: marker.lat,
+                    lng: marker.lng
+                });
             }
 
             ready() {
@@ -35,9 +53,23 @@
                     },
                     zoom: 14
                 });
+
+                this.map = map;
+            }
+
+            static get is() {
+                return 'g-map';
+            }
+
+            static get properties() {
+                return {
+                    map: {
+                        type: Object
+                    }
+                }
             }
         }
 
-        window.customElements.define('g-map', GMap)
+        window.customElements.define('g-map', GMap);
     </script>
 </dom-module>

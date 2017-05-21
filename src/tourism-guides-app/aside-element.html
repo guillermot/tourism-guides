@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="/src/tourism-guides-app/guide-list.html">
+<link rel="import" href="/src/tourism-guides-app/place-list.html">
 
 <dom-module id="aside-element">
     <template>
@@ -16,14 +17,62 @@
         </style>
 
     <div class="content" id="content">
-        <guide-list>
-        </guide-list>
+        <guide-list id="guideList" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
+        <place-list id="placeList" on-place-click="onPlaceClick" selected-guide="{{selectedGuide}}" style="display: none;"></place-list>  
     </div>
     </template>
+    <script src="../assets/js/places.js"></script>
     <script>
         class AsideElement extends Polymer.Element {
+
+            ready() {
+                super.ready();
+            }
+
+            onGuideClick(event) {
+                const selectedGuide = event.detail;
+
+                const markers = selectedGuide.places.forEach(function(place) {
+                    if (place.lat)
+                        this.dispatchEvent(new CustomEvent('add-marker', {
+                            detail: {
+                                lat: place.lat,
+                                lng: place.lng
+                            }
+                        }));
+                }, this);
+
+                this.$.guideList.style.display = 'none';
+                this.$.placeList.style.display = 'block';
+
+                this.selectedGuide = selectedGuide;
+            }
+
+            onPlaceClick(event) {
+                const placeClicked = event.detail;
+
+                this.dispatchEvent(new CustomEvent('map-pan-to', {
+                    detail: {
+                        lat: placeClicked.lat,
+                        lng: placeClicked.lng
+                    }
+                }));
+            }
+
             static get is() {
                 return 'aside-element';
+            }
+
+            static get properties() {
+                return {
+                    guides: {
+                        value: guidesList
+                    },
+                    selectedGuide: {},
+                    map: {
+                        type: Object
+                    }
+                }
             }
         }
 

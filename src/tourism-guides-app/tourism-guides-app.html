@@ -4,23 +4,32 @@
 
 <dom-module id="tourism-guides-app">
     <template>
-    <g-map></g-map>
-    <aside-element>
-    </aside-element>
-  </template>
+        <aside-element id="aside" on-add-marker="onAddMarker" on-map-pan-to="onMapPanTo"></aside-element>
+        <g-map id="gmap"></g-map>
+    </template>
 
     <script>
         class TourismGuidesApp extends Polymer.Element {
+            ready() {
+                super.ready();
+
+                this.$.aside.map = this.$.gmap.map;
+            }
+
+            onMapPanTo(event) {
+                this.$.gmap.markerPanTo(event.detail);
+            }
+
+            onAddMarker(event) {
+                this.$.gmap.addMarkers(event.detail);
+            }
+
             static get is() {
                 return 'tourism-guides-app';
             }
+
             static get properties() {
-                return {
-                    prop1: {
-                        type: String,
-                        value: 'tourism-guides-app'
-                    }
-                };
+                return {};
             }
         }
 
