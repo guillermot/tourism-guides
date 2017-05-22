@@ -11,12 +11,6 @@
 
     <script>
         class TourismGuidesApp extends Polymer.Element {
-            ready() {
-                super.ready();
-
-                this.$.aside.map = this.$.gmap.map;
-            }
-
             onMapPanTo(event) {
                 this.$.gmap.markerPanTo(event.detail);
             }
@@ -24,14 +18,7 @@
             onAddMarker(event) {
                 this.$.gmap.addMarkers(event.detail);
             }
-
-            // back() {
-            //     this.$.iron.selectPrevious();
-            // }
-
-            // next() {
-            //     this.$.iron.selectNext();
-            // }
+            
             static get is() {
                 return 'tourism-guides-app';
             }
