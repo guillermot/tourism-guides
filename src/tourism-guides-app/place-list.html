@@ -55,44 +55,9 @@
                 }
             }
 
-            refreshMapsMakers() {
-                if (this.selectedGuide && this.selectedGuide.places) {
-                    const map = this.map;
-
-                    this.selectedGuide.places.forEach(function(place) {
-
-                        if (place.lat) {
-                            const coordinates = {
-                                lat: place.lat,
-                                lng: place.lng
-                            };
-
-                            var marker = new google.maps.Marker({
-                                position: coordinates,
-                                map: map,
-                                title: place.title
-                            });
-
-                            this.markers.push(marker);
-                        }
-
-                    }, this);
-                }
-            }
-
             ready() {
                 super.ready();
                 this.markers = [];
-            }
-
-            removeAllMakers() {
-                const map = this.map;
-
-                this.markers.forEach(function(marker) {
-                    marker.setMap(null);
-                }, this);
-
-                this.marker = [];
             }
 
             static get is() {
@@ -101,13 +66,7 @@
 
             static get properties() {
                 return {
-                    selectedGuide: {},
-                    markers: {
-                        type: Array
-                    },
-                    map: {
-                        type: Object
-                    }
+                    selectedGuide: {}
                 }
             }
         }

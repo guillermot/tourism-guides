@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="place-card">
+    <template>
+        <style>
+            .back-button {
+                float:right;
+                cursor: pointer;
+            }
+        </style>
+        <h1>
+            {{selectedPlace.name}}
+        </h1>
+        <p>
+            {{selectedPlace.description}}
+        </p>
+        <h4 on-click="onBackButtonClick" class="back-button">Atras</h4>
+    </template>
+    <script>
+        class PlaceCard extends Polymer.Element {
+            onBackButtonClick() {
+                this.dispatchEvent(new CustomEvent('back-button'));
+            }
+            static get is() {
+                return 'place-card';
+            }
+
+            static get properties() {
+                return {
+                    selectedPlace: {
+                        type: Object
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(PlaceCard.is, PlaceCard)
+    </script>
+</dom-module>

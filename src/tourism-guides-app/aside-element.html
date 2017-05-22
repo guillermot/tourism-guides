@@ -1,6 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="/src/tourism-guides-app/guide-list.html">
 <link rel="import" href="/src/tourism-guides-app/place-list.html">
+<link rel="import" href="/src/tourism-guides-app/place-card.html">
+
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 
 <dom-module id="aside-element">
     <template>
@@ -15,11 +20,12 @@
                 overflow: scroll;
             }
         </style>
-
-    <div class="content" id="content">
+    <iron-pages id="iron" selected="guideList" class="content" attr-for-selected="id">
         <guide-list id="guideList" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
-        <place-list id="placeList" on-place-click="onPlaceClick" selected-guide="{{selectedGuide}}" style="display: none;"></place-list>  
-    </div>
+        <place-list id="placeList" on-place-click="onPlaceClick" selected-guide="{{selectedGuide}}" ></place-list>  
+        <place-card id="placeCard" on-back-button="onPlaceCardBackButton" selected-place="{{selectedPlace}}" ></place-cardlist>  
+    </iron-pages>
+    
     </template>
     <script src="../assets/js/places.js"></script>
     <script>
@@ -27,6 +33,12 @@
 
             ready() {
                 super.ready();
+
+                this.$.iron.selected = "guideList";
+            }
+
+            onPlaceCardBackButton(event) {
+                this.$.iron.selected = "placeList";
             }
 
             onGuideClick(event) {
@@ -42,8 +54,7 @@
                         }));
                 }, this);
 
-                this.$.guideList.style.display = 'none';
-                this.$.placeList.style.display = 'block';
+                this.$.iron.selected = "placeList";
 
                 this.selectedGuide = selectedGuide;
             }
@@ -57,6 +68,10 @@
                         lng: placeClicked.lng
                     }
                 }));
+
+                this.selectedPlace = placeClicked;
+                console.log(this.selectedPlace);
+                this.$.iron.selected = "placeCard";
             }
 
             static get is() {
@@ -69,6 +84,7 @@
                         value: guidesList
                     },
                     selectedGuide: {},
+                    selectedPlace: {},
                     map: {
                         type: Object
                     }

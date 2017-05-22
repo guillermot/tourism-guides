@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="/src/tourism-guides-app/g-map.html">
 <link rel="import" href="/src/tourism-guides-app/aside-element.html">
 
@@ -24,12 +25,15 @@
                 this.$.gmap.addMarkers(event.detail);
             }
 
+            // back() {
+            //     this.$.iron.selectPrevious();
+            // }
+
+            // next() {
+            //     this.$.iron.selectNext();
+            // }
             static get is() {
                 return 'tourism-guides-app';
-            }
-
-            static get properties() {
-                return {};
             }
         }
 
