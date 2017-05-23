@@ -2,6 +2,8 @@
 <link rel="import" href="/src/tourism-guides-app/guide-list.html">
 <link rel="import" href="/src/tourism-guides-app/place-list.html">
 <link rel="import" href="/src/tourism-guides-app/place-card.html">
+<link rel="import" href="/src/tourism-guides-app/place-data.html">
+<link rel="import" href="/src/tourism-guides-app/guide-data.html">
 
 <link rel="import" href="../../bower_components/app-route/app-location.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
@@ -19,17 +21,43 @@
                 background-color: white;
                 overflow: scroll;
             }
+
+            .routing{
+                background-color: red;
+                display: block;
+                text-align: right;
+            }
         </style>
-    <iron-pages id="iron" selected="guideList" class="content" attr-for-selected="id">
+        <div class="routing">Page: {{ data.page }}</div>
+        <div class="routing">Page: {{ subrouteData.id }}</div>
+        <app-location route="{{route}}"></app-location>
+        <app-route
+            route="{{route}}"
+            pattern="/:page"
+            data="{{data}}"
+            tail="{{subroute}}">
+        </app-route>
+        
+        <app-route
+            route="{{subroute}}"
+            pattern="/:id"
+            data="{{subrouteData}}">
+        </app-route>
+        <guide-data guides="{{guides}}">
+        </guide-data>
+    <iron-pages id="iron" selected="data.page" class="content" attr-for-selected="id">
         <guide-list id="guideList" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
         <place-list id="placeList" on-place-click="onPlaceClick" selected-guide="{{selectedGuide}}" ></place-list>  
         <place-card id="placeCard" on-back-button="onPlaceCardBackButton" selected-place="{{selectedPlace}}" ></place-card>  
     </iron-pages>
     
     </template>
-    <script src="../assets/js/places.js"></script>
     <script>
         class AsideElement extends Polymer.Element {
+
+            toString(obj) {
+                return JSON.stringify(data)
+            }
 
             ready() {
                 super.ready();
@@ -80,9 +108,7 @@
 
             static get properties() {
                 return {
-                    guides: {
-                        value: guidesList
-                    },
+                    guides: {},
                     selectedGuide: {},
                     selectedPlace: {}
                 }
