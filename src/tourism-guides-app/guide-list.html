@@ -50,7 +50,6 @@
 
             ready() {
                 super.ready();
-                this.guides = guidesList;
             }
 
             onGuideClick(event) {
@@ -65,7 +64,7 @@
 
             static get properties() {
                 return {
-                    guides: {}
+                    guides: { notify: true }
                 }
             }
         }

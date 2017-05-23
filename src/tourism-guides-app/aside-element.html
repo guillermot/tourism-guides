@@ -29,7 +29,7 @@
             }
         </style>
         <div class="routing">Page: {{ data.page }}</div>
-        <div class="routing">Page: {{ subrouteData.id }}</div>
+        <div class="routing">Id: {{ subrouteData.id }}</div>
         <app-location route="{{route}}"></app-location>
         <app-route
             route="{{route}}"
@@ -43,32 +43,22 @@
             pattern="/:id"
             data="{{subrouteData}}">
         </app-route>
+        
         <guide-data guides="{{guides}}">
         </guide-data>
-    <iron-pages id="iron" selected="data.page" class="content" attr-for-selected="id">
+
+        <place-data guides="{{guides}}" place-code="{{subrouteData.id}}" selected-guide="{{selectedGuide}}">
+        </place-data>
+
+    <iron-pages id="iron" selected="[[data.page]]" class="content" attr-for-selected="id">
         <guide-list id="guideList" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
-        <place-list id="placeList" on-place-click="onPlaceClick" selected-guide="{{selectedGuide}}" ></place-list>  
-        <place-card id="placeCard" on-back-button="onPlaceCardBackButton" selected-place="{{selectedPlace}}" ></place-card>  
+        <place-list id="placeList" on-place-click="onPlaceClick" selected-guide="{{selectedGuide}}"></place-list>  
+        <place-card id="placeCard" on-back-button="onPlaceCardBackButton" selected-place="{{selectedPlace}}"></place-card>  
     </iron-pages>
     
     </template>
     <script>
         class AsideElement extends Polymer.Element {
-
-            toString(obj) {
-                return JSON.stringify(data)
-            }
-
-            ready() {
-                super.ready();
-
-                this.$.iron.selected = "guideList";
-            }
-
-            onPlaceCardBackButton(event) {
-                this.$.iron.selected = "placeList";
-            }
-
             onGuideClick(event) {
                 const selectedGuide = event.detail;
 
@@ -81,8 +71,6 @@
                             }
                         }));
                 }, this);
-
-                this.$.iron.selected = "placeList";
 
                 this.selectedGuide = selectedGuide;
             }
@@ -99,7 +87,6 @@
 
                 this.selectedPlace = placeClicked;
                 console.log(this.selectedPlace);
-                this.$.iron.selected = "placeCard";
             }
 
             static get is() {
@@ -108,7 +95,6 @@
 
             static get properties() {
                 return {
-                    guides: {},
                     selectedGuide: {},
                     selectedPlace: {}
                 }

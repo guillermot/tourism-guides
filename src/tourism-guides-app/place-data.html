@@ -2,22 +2,24 @@
 
 <dom-module id="place-data">
     <script>
+        
         class PlaceData extends Polymer.Element {
 
             _getGuide(guideCode) {
-                const finds = guidesList.find(guide => guide.code == guideCode);
-                if (finds.length > 0)
-                    return finds[0];
-                return null;
+                return this.guides.find(guide => guide.code == guideCode);
             }
 
             static get properties() {
                 return {
-                    guidesList: {},
-                    guideCode: {},
-                    places: {
-                        compute: '_getGuide(guideCode)'
-                    }
+                    guides: {
+                        type: Array
+                    },
+                    selectedGuide: {
+                        computed: '_getGuide(placeCode)',
+                        readOnly: true,
+                        notify: true
+                    },
+                    placeCode: {}
                 };
             }
 

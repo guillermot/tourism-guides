@@ -9,7 +9,7 @@
         place list
         <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
         <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
-        <template is="dom-repeat" items="{{selectedGuide.places}}"> 
+        <template is="dom-repeat" items="[[selectedGuide.places]]"> 
             <div class="box" on-click="onPlaceClick">
                 <article class="media">
                     <div class="media-left">
@@ -20,9 +20,9 @@
                     <div class="media-content">
                         <div class="content">
                             <p>
-                            <strong>{{item.name}}</strong> <small>@johnsmith</small> <small>31m</small>
+                            <strong>[[item.name]]</strong> <small>@johnsmith</small> <small>31m</small>
                             <br>
-                            {{item.description}}
+                            [[item.description]]
                             </p>
                         </div>
                         <nav class="level is-mobile">

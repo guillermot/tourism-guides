@@ -4,6 +4,7 @@
     <script>
         var guidesArr = [{
             name: 'First visit!',
+            code: 'first-visit',
             description: 'All places you need to go in your first visit to New York.',
             img: '/src/assets/img/manhattan/rockefeller-center.jpg',
             places: [{
@@ -53,6 +54,7 @@
             }]
         }, {
             name: 'Central Park',
+            code: 'central-park',
             description: 'This park is full of litles treasures to discover, each one of them will blow your mind.',
             img: '/src/assets/img/manhattan/high-line.jpg',
             places: [{
@@ -99,37 +101,38 @@
         }, {
             name: 'Downtown',
             description: 'One of the most important financial',
+            code: 'downtown',
             img: '/src/assets/img/manhattan/high-line.jpg',
             places: [{
-                    id: 13,
-                    type: 'place',
-                    name: 'World Trade Center',
-                    description: 'Iconic Midtown business complex',
-                    img: '/src/assets/img/manhattan/high-line.jpg',
-                    lat: 40.711802,
-                    lng: -73.013118
-                }, {
-                    id: 14,
-                    type: 'place',
-                    name: 'Charging Bull',
-                    description: 'Iconic Midtown business complex',
-                    img: '/src/assets/img/manhattan/high-line.jpg',
-                    lat: 40.705552,
-                    lng: -73.013446
-                },
-
-                {
-                    id: 5,
-                    type: 'place',
-                    name: 'Brooklyn Bridge',
-                    description: 'Iconic Midtown business complex',
-                    img: '/src/assets/img/manhattan/brookyn-bridge.jpg',
-                    lat: 40.706574,
-                    lng: -73.996810
-                }
+                id: 13,
+                type: 'place',
+                name: 'World Trade Center',
+                description: 'Iconic Midtown business complex',
+                img: '/src/assets/img/manhattan/high-line.jpg',
+                lat: 40.711802,
+                lng: -73.013118
+            }, {
+                id: 14,
+                type: 'place',
+                name: 'Charging Bull',
+                description: 'Iconic Midtown business complex',
+                img: '/src/assets/img/manhattan/high-line.jpg',
+                lat: 40.705552,
+                lng: -73.013446
+            },
+            {
+                id: 5,
+                type: 'place',
+                name: 'Brooklyn Bridge',
+                description: 'Iconic Midtown business complex',
+                img: '/src/assets/img/manhattan/brookyn-bridge.jpg',
+                lat: 40.706574,
+                lng: -73.996810
+            }
             ]
         }, {
             name: 'Neighborhoods',
+            code: 'neighborhoods',
             description: 'Most important neighborhoods of Manhattan. All the right places you should visit',
             img: '/src/assets/img/manhattan/high-line.jpg',
             places: [{
@@ -172,12 +175,13 @@
                 img: '/src/assets/img/manhattan/high-line.jpg',
                 lat: 40.722913,
                 lng: -74.000018
-            }, ]
+            },]
         }];
 
         class GuideData extends Polymer.Element {
 
             _getGuides() {
+                console.log('_getGuides');
                 return guidesArr;
             }
 
@@ -185,7 +189,9 @@
                 return {
                     guides: {
                         type: Array,
-                        value: '_getGuides()'
+                        value: guidesArr,
+                        readOnly: true,
+                        notify: true
                     }
                 }
             }
