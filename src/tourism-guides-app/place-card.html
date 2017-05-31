@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-
+<link rel="import" href="../../bower_components/app-route/app-route.html">
 
 <dom-module id="place-card">
     <template>
@@ -15,10 +15,21 @@
         <p>
             {{selectedPlace.description}}
         </p>
-        <h4 on-click="onBackButtonClick" class="back-button">Atras</h4>
+        <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+        <div>
+            queryParams {{ toJson(queryParams) }}
+        </div>
+        <h4 on-click="onBackButtonClick" class="back-button">
+            <a href="/places/{{queryParams.from}}">Atras</a>
+        </h4>
     </template>
     <script>
         class PlaceCard extends Polymer.Element {
+
+            toJson(obj){
+                return JSON.stringify(obj);
+            }
+
             onBackButtonClick() {
                 this.dispatchEvent(new CustomEvent('back-button'));
             }
