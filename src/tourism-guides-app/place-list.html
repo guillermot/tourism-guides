@@ -9,11 +9,30 @@
                 margin-bottom: 5px !important;
                 cursor: pointer;
             }
-        </style>
+            
+            .gm-header
+            {
+                padding-bottom: 20px !important;
+                padding-top: 20px !important;
+            }
 
-        place list
+            .hero-body .title { padding-left: 25px; }
+            .hero-body div { padding-left: 25px; margin-top: -20px;  }
+        </style>
+        
         <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
         <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
+        <section class="hero is-warning">
+            <div class="hero-body gm-header">
+                    <h1 class="title">
+                        {{selectedGuide.name}} <span class="tag is-info has-text-right">Warning</span>
+                    </h1>
+                    <div>
+                        {{selectedGuide.description}}
+                    </div>
+            </div>
+        </section>
+        
         <div>
             <a href="/"><<</a>
         </div>
