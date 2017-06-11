@@ -4,29 +4,42 @@
 <dom-module id="place-card">
     <template>
         <style>
-            .back-button {
-                float:right;
+            .box {
+                margin-left: 5px;
+                margin-right: 5px;
+                margin-bottom: 5px !important;
                 cursor: pointer;
             }
+            
+            .gm-header
+            {
+                padding-bottom: 20px !important;
+                padding-top: 20px !important;
+            }
+
+            .hero-body .title { padding-left: 25px; }
+            .hero-body div { padding-left: 25px; margin-top: -20px;  }
+            .back-button { float: right; margin-right: 20px; margin-top: 8px; cursor: pointer; }
         </style>
-        <h1>
-            {{selectedPlace.name}}
-        </h1>
-        <p>
-            {{selectedPlace.description}}
-        </p>
+        
+        <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
+        <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
+        <section class="hero is-info">
+            <div class="hero-body gm-header">
+                    <h1 class="title">
+                        {{selectedPlace.name}} <a href="/places/{{queryParams.from}}"><span class="tag is-success back-button">Back</span></a>
+                    </h1>
+                    <div>
+                        {{selectedPlace.description}}
+                    </div>
+            </div>
+        </section>
         <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
-        <div>
-            queryParams {{ toJson(queryParams) }}
-        </div>
-        <h4 on-click="onBackButtonClick" class="back-button">
-            <a href="/places/{{queryParams.from}}">Atras</a>
-        </h4>
     </template>
     <script>
         class PlaceCard extends Polymer.Element {
 
-            toJson(obj){
+            toJson(obj) {
                 return JSON.stringify(obj);
             }
 

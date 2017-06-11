@@ -44,6 +44,7 @@
                 text-align: right;
             }
         </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         <app-location route="{{route}}"></app-location>
         <app-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{subroute}}">
         </app-route>    
@@ -59,7 +60,7 @@
 
         <iron-pages id="iron" selected="[[data.page]]" class="content scrollbar" attr-for-selected="path" fallback-selection="bar-url">
             <guide-list id="guideList" path="" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
-            <place-list id="placeList" path="places" on-place-click="onPlaceClick" selected-guide="{{selectedGuide}}"></place-list>
+            <place-list id="placeList" path="places" on-place-click="onPlaceClick" on-back-button-click="onPlaceListBackClick" selected-guide="{{selectedGuide}}"></place-list>
             <place-card id="placeCard" path="place" selected-place="{{selectedPlace}}"></place-card>
             <bar-url id="bar-url" path="bar-url"></bar-url>
         </iron-pages>
@@ -70,7 +71,7 @@
             onGuideClick(event) {
                 const selectedGuide = event.detail;
 
-                const markers = selectedGuide.places.forEach(function (place) {
+                const markers = selectedGuide.places.forEach(function(place) {
                     if (place.lat)
                         this.dispatchEvent(new CustomEvent('add-marker', {
                             detail: {
@@ -81,6 +82,10 @@
                 }, this);
 
                 this.selectedGuide = selectedGuide;
+            }
+
+            onPlaceListBackClick() {
+                this.dispatchEvent(new CustomEvent("clean-map"));
             }
 
             onPlaceClick(event) {

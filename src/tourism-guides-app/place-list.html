@@ -18,6 +18,8 @@
 
             .hero-body .title { padding-left: 25px; }
             .hero-body div { padding-left: 25px; margin-top: -20px;  }
+
+            .back-button { float: right; margin-right: 20px; margin-top: 8px; cursor: pointer; }
         </style>
         
         <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
@@ -25,7 +27,7 @@
         <section class="hero is-warning">
             <div class="hero-body gm-header">
                     <h1 class="title">
-                        {{selectedGuide.name}} <span class="tag is-info has-text-right">Warning</span>
+                        {{selectedGuide.name}} <a href="/" on-click="onBackButtonClick" ><span class="tag is-info back-button">Back</span></a>
                     </h1>
                     <div>
                         {{selectedGuide.description}}
@@ -34,7 +36,6 @@
         </section>
         
         <div>
-            <a href="/"><<</a>
         </div>
         <template is="dom-repeat" items="[[selectedGuide.places]]">
             <a href="/place/{{item.id}}?from={{selectedGuide.code}}">
@@ -81,6 +82,10 @@
                         detail: event.model.item
                     }));
                 }
+            }
+
+            onBackButtonClick() {
+                this.dispatchEvent(new CustomEvent('back-button-click'));
             }
 
             ready() {
