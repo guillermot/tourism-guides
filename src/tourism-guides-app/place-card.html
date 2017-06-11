@@ -20,6 +20,9 @@
             .hero-body .title { padding-left: 25px; }
             .hero-body div { padding-left: 25px; margin-top: -20px;  }
             .back-button { float: right; margin-right: 20px; margin-top: 8px; cursor: pointer; }
+
+            .long-description { font-size: 12px; padding: 15px 10px 10px 10px; }
+            .long-description > h2 { font-size: 14px; font-weight: bold; margin-top: 15px; }
         </style>
         
         <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
@@ -34,6 +37,8 @@
                     </div>
             </div>
         </section>
+        <div class="long-description" inner-h-t-m-l="{{selectedPlace.longDescription}}">
+        </div>
         <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
     </template>
     <script>

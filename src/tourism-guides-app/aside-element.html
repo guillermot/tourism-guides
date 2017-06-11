@@ -20,7 +20,10 @@
                 width: 400px;
                 height: 100%;
                 background-color: white;
-                overflow: scroll;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                -webkit-animation-duration: 5s;
+                animation-duration: 5s;
             }
 
             .scrollbar::-webkit-scrollbar-track {
@@ -58,7 +61,7 @@
         <place-data guides="{{guides}}" place-code="{{subrouteData.id}}" selected-guide="{{selectedGuide}}">
         </place-data>
 
-        <iron-pages id="iron" selected="[[data.page]]" class="content scrollbar" attr-for-selected="path" fallback-selection="bar-url">
+        <iron-pages id="iron" selected="[[data.page]]" on-iron-select="onIronActivate" class="content scrollbar" attr-for-selected="path" fallback-selection="bar-url">
             <guide-list id="guideList" path="" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
             <place-list id="placeList" path="places" on-place-click="onPlaceClick" on-back-button-click="onPlaceListBackClick" selected-guide="{{selectedGuide}}"></place-list>
             <place-card id="placeCard" path="place" selected-place="{{selectedPlace}}"></place-card>
@@ -68,6 +71,21 @@
     </template>
     <script>
         class AsideElement extends Polymer.Element {
+
+            ready() {
+                super.ready();
+                const self = this;
+                this.$.iron.addEventListener('animationend', function() {
+                    console.log(self.sectionTransitionClass);
+                    self.$.iron.classList.remove('animated');
+                    self.$.iron.classList.remove(self.sectionTransitionClass);
+                }, false);
+            }
+
+            onIronActivate(event) {
+                this.playSectionTransition();
+            }
+
             onGuideClick(event) {
                 const selectedGuide = event.detail;
 
@@ -82,6 +100,12 @@
                 }, this);
 
                 this.selectedGuide = selectedGuide;
+            }
+
+            playSectionTransition() {
+                const classes = ' animated ' + this.sectionTransitionClass;
+                console.log(classes);
+                this.$.iron.classList += classes;
             }
 
             onPlaceListBackClick() {
@@ -108,7 +132,11 @@
             static get properties() {
                 return {
                     selectedGuide: {},
-                    selectedPlace: {}
+                    selectedPlace: {},
+                    sectionTransitionClass: {
+                        type: String,
+                        value: 'fadeIn'
+                    }
                 }
             }
         }

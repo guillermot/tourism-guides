@@ -21,6 +21,7 @@
             .hero-body .title { padding-left: 25px; }
             .hero-body .subtitle { padding-left: 25px; }
         </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
         <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
 
@@ -75,10 +76,6 @@
     <script>
         class GuideList extends Polymer.Element {
 
-            ready() {
-                super.ready();
-            }
-
             onGuideClick(event) {
                 const item = event.model.item;
                 this.dispatchEvent(new CustomEvent('guide-click', {
@@ -92,7 +89,9 @@
 
             static get properties() {
                 return {
-                    guides: { notify: true }
+                    guides: {
+                        notify: true
+                    }
                 }
             }
         }

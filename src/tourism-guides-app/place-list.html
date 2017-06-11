@@ -24,7 +24,7 @@
         
         <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
         <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
-        <section class="hero is-warning">
+        <section id="section" class="hero is-warning">
             <div class="hero-body gm-header">
                     <h1 class="title">
                         {{selectedGuide.name}} <a href="/" on-click="onBackButtonClick" ><span class="tag is-info back-button">Back</span></a>
@@ -35,8 +35,6 @@
             </div>
         </section>
         
-        <div>
-        </div>
         <template is="dom-repeat" items="[[selectedGuide.places]]">
             <a href="/place/{{item.id}}?from={{selectedGuide.code}}">
                 <div class="box" on-click="onPlaceClick">
