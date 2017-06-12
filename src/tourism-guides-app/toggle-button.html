@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="toggle-button">
+    <template>
+        <style>
+            .toggle-button {
+                background-color: red;
+                z-index: 99999;
+                width: 40px;
+                height: 40px;
+                position: absolute;
+                top:60px;
+                left: inherit;
+                cursor: pointer;
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <div id="button" class="toggle-button" on-click="onToggleClick">
+            aaaa
+        </div>
+    </template>
+    <script>
+        class ToggleButtonElement extends Polymer.Element {
+
+            onToggleClick() {
+                this.dispatchEvent(new CustomEvent('toggle-click'));
+            }
+
+            static get is() {
+                return 'toggle-button';
+            }
+        }
+
+        window.customElements.define(ToggleButtonElement.is, ToggleButtonElement);
+    </script>
+</dom-module>

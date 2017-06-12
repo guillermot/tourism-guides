@@ -5,6 +5,7 @@
 <link rel="import" href="/src/tourism-guides-app/place-data.html">
 <link rel="import" href="/src/tourism-guides-app/guide-data.html">
 <link rel="import" href="/src/tourism-guides-app/bad-url.html">
+<link rel="import" href="/src/tourism-guides-app/toggle-button.html">
 
 <link rel="import" href="../../bower_components/app-route/app-location.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
@@ -13,6 +14,16 @@
 <dom-module id="aside-element">
     <template>
         <style>
+            .container {
+                position: fixed;
+                z-index: 2; 
+                background-color:white; 
+                left: 0px;
+                top: 0px;
+                width: 400px;
+                height: 100%;
+            }
+            
             .content {
                 position: fixed;
                 left: 0px;
@@ -24,7 +35,13 @@
                 overflow-x: hidden;
                 -webkit-animation-duration: 5s;
                 animation-duration: 5s;
+                z-index: 3;
             }
+
+            .container.toggle-out { left: -400px !important;}
+            .content.toggle-out { left: -400px !important;}
+            .toggle-button{ left: 400px;}
+            .toggle-button.toggle-out { left: 0px !important;}
 
             .scrollbar::-webkit-scrollbar-track {
                 -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -60,13 +77,16 @@
 
         <place-data guides="{{guides}}" place-code="{{subrouteData.id}}" selected-guide="{{selectedGuide}}">
         </place-data>
-
-        <iron-pages id="iron" selected="[[data.page]]" on-iron-select="onIronActivate" class="content scrollbar" attr-for-selected="path" fallback-selection="bar-url">
-            <guide-list id="guideList" path="" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
-            <place-list id="placeList" path="places" on-place-click="onPlaceClick" on-back-button-click="onPlaceListBackClick" selected-guide="{{selectedGuide}}"></place-list>
-            <place-card id="placeCard" path="place" selected-place="{{selectedPlace}}"></place-card>
-            <bar-url id="bar-url" path="bar-url"></bar-url>
-        </iron-pages>
+        <div id="asider" class="container">
+            <iron-pages id="iron" selected="[[data.page]]" on-iron-select="onIronActivate" class="content scrollbar" attr-for-selected="path" fallback-selection="bar-url">
+                <guide-list id="guideList" path="" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
+                <place-list id="placeList" path="places" on-place-click="onPlaceClick" on-back-button-click="onPlaceListBackClick" selected-guide="{{selectedGuide}}"></place-list>
+                <place-card id="placeCard" path="place" selected-place="{{selectedPlace}}"></place-card>
+                <bar-url id="bar-url" path="bar-url"></bar-url>
+            </iron-pages>
+        </div>
+        <toggle-button id="toggleButton" class="toggle-button" on-toggle-click="onToggleClick">
+        </toggle-button>
 
     </template>
     <script>
@@ -74,12 +94,45 @@
 
             ready() {
                 super.ready();
+                this.setIronAnimationEndHandler();
+                this.setIronContainerAnimationEndHandler();
+            }
+
+            setIronAnimationEndHandler() {
                 const self = this;
-                this.$.iron.addEventListener('animationend', function() {
-                    console.log(self.sectionTransitionClass);
-                    self.$.iron.classList.remove('animated');
-                    self.$.iron.classList.remove(self.sectionTransitionClass);
+                this.$.iron.addEventListener('animationend', function(event) {
+                    switch (event.animationName) {
+                        case self.sectionTransitionClass:
+                            self.$.iron.classList.remove('animated');
+                            self.$.iron.classList.remove(self.sectionTransitionClass);
+                            break;
+                    }
                 }, false);
+            }
+
+            setIronContainerAnimationEndHandler() {
+                const self = this;
+                this.$.asider.addEventListener('animationend', function(event) {
+                    switch (event.animationName) {
+                        case self.toggleButtonOutTransitionClass:
+                            let button = self.$.toggleButton.$.button;
+                            self.$.asider.classList.remove('animated');
+                            self.$.asider.classList.remove(self.toggleButtonOutTransitionClass);
+
+                            button.classList.remove('animated');
+                            button.classList.remove(self.toggleButtonOutTransitionClass);
+
+                            self.$.iron.classList.add('toggle-out');
+                            self.$.asider.classList.add('toggle-out');
+                            button.classList.add('toggle-out');
+                            break;
+                    }
+                }, false);
+            }
+
+            onToggleClick() {
+                this.$.asider.classList += ' animated ' + this.toggleButtonOutTransitionClass;
+                this.$.toggleButton.$.button.classList += ' animated ' + this.toggleButtonOutTransitionClass;
             }
 
             onIronActivate(event) {
@@ -136,6 +189,10 @@
                     sectionTransitionClass: {
                         type: String,
                         value: 'fadeIn'
+                    },
+                    toggleButtonOutTransitionClass: {
+                        type: String,
+                        value: 'slideOutLeft'
                     }
                 }
             }

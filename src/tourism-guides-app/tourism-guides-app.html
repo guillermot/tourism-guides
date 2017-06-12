@@ -5,8 +5,18 @@
 
 <dom-module id="tourism-guides-app">
     <template>
-        <aside-element id="aside" on-add-marker="onAddMarker" on-map-pan-to="onMapPanTo" on-clean-map="onCleanMap"></aside-element>
-        <g-map id="gmap"></g-map>
+        <style>
+            .aside-element{
+                z-index: 1;
+                background-color: white;
+            }
+
+            .gmap{
+                z-index: 0;
+            }
+        </style>
+        <aside-element id="aside" class="aside-element" on-add-marker="onAddMarker" on-map-pan-to="onMapPanTo" on-clean-map="onCleanMap"></aside-element>
+        <g-map id="gmap" class="gmap"></g-map>
     </template>
 
     <script>
