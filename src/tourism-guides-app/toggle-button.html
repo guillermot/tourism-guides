@@ -13,6 +13,36 @@
                 left: inherit;
                 cursor: pointer;
             }
+            .toggle-button.toggle-out { left: 0px !important;}
+            
+            @keyframes slideOutLeftLong {
+                from {
+                    transform: translate3d(0, 0, 0);
+                }
+
+                to {
+                    transform: translate3d(-400px, 0, 0);
+                }
+            }
+
+            .slideOutLeftLong {
+                animation-name: slideOutLeftLong;
+            }
+
+            @keyframes slideInLeftLong {
+                from {
+                    transform: translate3d(0, 0, 0);
+                    visibility: visible;
+                }
+
+                to {
+                    transform: translate3d(400px, 0, 0);
+                }
+            }
+
+            .slideInLeftLong {
+                animation-name: slideInLeftLong;
+            }
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         <div id="button" class="toggle-button" on-click="onToggleClick">
@@ -23,7 +53,10 @@
         class ToggleButtonElement extends Polymer.Element {
 
             onToggleClick() {
-                this.dispatchEvent(new CustomEvent('toggle-click'));
+                var status = this.$.button.classList.contains('toggle-out') ? 'closed' : 'opened';
+                this.dispatchEvent(new CustomEvent('toggle-click', {
+                    detail: status
+                }));
             }
 
             static get is() {

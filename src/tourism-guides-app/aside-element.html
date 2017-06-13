@@ -38,10 +38,9 @@
                 z-index: 3;
             }
 
-            .container.toggle-out { left: -400px !important;}
-            .content.toggle-out { left: -400px !important;}
+            .container.toggle-out { left: -400px;}
+            .content.toggle-out { left: -400px ;}
             .toggle-button{ left: 400px;}
-            .toggle-button.toggle-out { left: 0px !important;}
 
             .scrollbar::-webkit-scrollbar-track {
                 -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -113,26 +112,48 @@
             setIronContainerAnimationEndHandler() {
                 const self = this;
                 this.$.asider.addEventListener('animationend', function(event) {
+                    let button = self.$.toggleButton.$.button;
+                    console.log(event.animationName);
                     switch (event.animationName) {
                         case self.toggleButtonOutTransitionClass:
-                            let button = self.$.toggleButton.$.button;
                             self.$.asider.classList.remove('animated');
                             self.$.asider.classList.remove(self.toggleButtonOutTransitionClass);
 
                             button.classList.remove('animated');
-                            button.classList.remove(self.toggleButtonOutTransitionClass);
+                            button.classList.remove(self.toggleButtonOutTransitionLongClass);
 
                             self.$.iron.classList.add('toggle-out');
                             self.$.asider.classList.add('toggle-out');
                             button.classList.add('toggle-out');
                             break;
+                        case self.toggleButtonInTransitionClass:
+                            button.classList.remove('animated');
+                            button.classList.remove('toggle-out');
+                            self.$.asider.classList.remove('animated');
+                            self.$.iron.classList.remove('animated');
+
+
+                            self.$.iron.classList.remove(self.toggleButtonInTransitionClass);
+                            self.$.asider.classList.remove(self.toggleButtonInTransitionClass);
+                            button.classList.remove(self.toggleButtonInTransitionLongClass);
+                            break;
                     }
                 }, false);
             }
 
-            onToggleClick() {
-                this.$.asider.classList += ' animated ' + this.toggleButtonOutTransitionClass;
-                this.$.toggleButton.$.button.classList += ' animated ' + this.toggleButtonOutTransitionClass;
+            onToggleClick(event) {
+                if (event.detail == 'opened') {
+                    this.$.asider.classList += ' animated ' + this.toggleButtonOutTransitionClass;
+                    this.$.toggleButton.$.button.classList += ' animated ' + this.toggleButtonOutTransitionLongClass;
+                } else {
+                    // this.$.asider.classList += ' animated ' + this.toggleButtonInTransitionClass;
+
+                    this.$.iron.classList.remove('toggle-out');
+                    this.$.asider.classList.remove('toggle-out');
+                    // this.$.iron.classList += ' animated ' + this.toggleButtonInTransitionClass;
+                    this.$.asider.classList += ' animated ' + this.toggleButtonInTransitionClass;
+                    this.$.toggleButton.$.button.classList += ' animated ' + this.toggleButtonInTransitionLongClass;
+                }
             }
 
             onIronActivate(event) {
@@ -193,6 +214,18 @@
                     toggleButtonOutTransitionClass: {
                         type: String,
                         value: 'slideOutLeft'
+                    },
+                    toggleButtonInTransitionClass: {
+                        type: String,
+                        value: 'slideInLeft'
+                    },
+                    toggleButtonOutTransitionLongClass: {
+                        type: String,
+                        value: 'slideOutLeftLong'
+                    },
+                    toggleButtonInTransitionLongClass: {
+                        type: String,
+                        value: 'slideInLeftLong'
                     }
                 }
             }
