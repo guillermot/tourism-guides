@@ -4,9 +4,9 @@
     <template>
         <style>
             .toggle-button {
-                background-color: red;
+                background-color: beige;
                 z-index: 99999;
-                width: 40px;
+                width: 30px;
                 height: 40px;
                 position: absolute;
                 top:60px;
@@ -46,7 +46,7 @@
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         <div id="button" class="toggle-button" on-click="onToggleClick">
-            aaaa
+            <<
         </div>
     </template>
     <script>
@@ -59,8 +59,41 @@
                 }));
             }
 
+            transitionIn() {
+                this.$.button.classList += ' animated ' + this.toggleButtonInTransitionLongClass;
+            }
+
+            transitionOut() {
+                this.$.button.classList += ' animated ' + this.toggleButtonOutTransitionLongClass;
+            }
+
+            transitionInEnd() {
+                this.$.button.classList.remove('animated');
+                this.$.button.classList.remove('toggle-out');
+                this.$.button.classList.remove(this.toggleButtonInTransitionLongClass);
+            }
+
+            transitionOutEnd() {
+                this.$.button.classList.remove('animated');
+                this.$.button.classList.add('toggle-out');
+                this.$.button.classList.remove(this.toggleButtonOutTransitionLongClass);
+            }
+
             static get is() {
                 return 'toggle-button';
+            }
+
+            static get properties() {
+                return {
+                    toggleButtonOutTransitionLongClass: {
+                        type: String,
+                        value: 'slideOutLeftLong'
+                    },
+                    toggleButtonInTransitionLongClass: {
+                        type: String,
+                        value: 'slideInLeftLong'
+                    }
+                };
             }
         }
 

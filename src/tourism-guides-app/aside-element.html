@@ -112,30 +112,15 @@
             setIronContainerAnimationEndHandler() {
                 const self = this;
                 this.$.asider.addEventListener('animationend', function(event) {
-                    let button = self.$.toggleButton.$.button;
                     console.log(event.animationName);
                     switch (event.animationName) {
                         case self.toggleButtonOutTransitionClass:
-                            self.$.asider.classList.remove('animated');
-                            self.$.asider.classList.remove(self.toggleButtonOutTransitionClass);
-
-                            button.classList.remove('animated');
-                            button.classList.remove(self.toggleButtonOutTransitionLongClass);
-
-                            self.$.iron.classList.add('toggle-out');
-                            self.$.asider.classList.add('toggle-out');
-                            button.classList.add('toggle-out');
+                            self.$.toggleButton.transitionOutEnd();
+                            self.transitionOutEnd();
                             break;
                         case self.toggleButtonInTransitionClass:
-                            button.classList.remove('animated');
-                            button.classList.remove('toggle-out');
-                            self.$.asider.classList.remove('animated');
-                            self.$.iron.classList.remove('animated');
-
-
-                            self.$.iron.classList.remove(self.toggleButtonInTransitionClass);
-                            self.$.asider.classList.remove(self.toggleButtonInTransitionClass);
-                            button.classList.remove(self.toggleButtonInTransitionLongClass);
+                            self.$.toggleButton.transitionInEnd();
+                            self.transitionInEnd();
                             break;
                     }
                 }, false);
@@ -143,17 +128,34 @@
 
             onToggleClick(event) {
                 if (event.detail == 'opened') {
-                    this.$.asider.classList += ' animated ' + this.toggleButtonOutTransitionClass;
-                    this.$.toggleButton.$.button.classList += ' animated ' + this.toggleButtonOutTransitionLongClass;
+                    this.$.toggleButton.transitionOut();
+                    this.transitionOut();
                 } else {
-                    // this.$.asider.classList += ' animated ' + this.toggleButtonInTransitionClass;
-
-                    this.$.iron.classList.remove('toggle-out');
-                    this.$.asider.classList.remove('toggle-out');
-                    // this.$.iron.classList += ' animated ' + this.toggleButtonInTransitionClass;
-                    this.$.asider.classList += ' animated ' + this.toggleButtonInTransitionClass;
-                    this.$.toggleButton.$.button.classList += ' animated ' + this.toggleButtonInTransitionLongClass;
+                    this.$.toggleButton.transitionIn();
+                    this.transitionIn();
                 }
+            }
+
+            transitionIn() {
+                this.$.iron.classList.remove('toggle-out');
+                this.$.asider.classList.remove('toggle-out');
+                this.$.asider.classList += ' animated ' + this.toggleButtonInTransitionClass;
+            }
+            transitionOut() {
+                this.$.asider.classList += ' animated ' + this.toggleButtonOutTransitionClass;
+            }
+            transitionInEnd() {
+                this.$.asider.classList.remove('animated');
+                this.$.iron.classList.remove('animated');
+                this.$.iron.classList.remove(this.toggleButtonInTransitionClass);
+                this.$.asider.classList.remove(this.toggleButtonInTransitionClass);
+            }
+            transitionOutEnd() {
+                this.$.asider.classList.remove('animated');
+                this.$.asider.classList.remove(this.toggleButtonOutTransitionClass);
+
+                this.$.iron.classList.add('toggle-out');
+                this.$.asider.classList.add('toggle-out');
             }
 
             onIronActivate(event) {
@@ -218,14 +220,6 @@
                     toggleButtonInTransitionClass: {
                         type: String,
                         value: 'slideInLeft'
-                    },
-                    toggleButtonOutTransitionLongClass: {
-                        type: String,
-                        value: 'slideOutLeftLong'
-                    },
-                    toggleButtonInTransitionLongClass: {
-                        type: String,
-                        value: 'slideInLeftLong'
                     }
                 }
             }
