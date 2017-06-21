@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="/src/tourism-guides-app/photo-swipe.html">
 
 <dom-module id="place-card">
     <template>
@@ -23,29 +24,58 @@
 
             .long-description { font-size: 12px; padding: 15px 10px 10px 10px; }
             .long-description > h2 { font-size: 14px; font-weight: bold; margin-top: 15px; }
+
+            .photo-gallery {
+                background: white;
+                position: fixed;
+                width: 400px;
+                height: 100px;
+                left: 0px;
+                bottom: 0px;
+            }
+
+            .photo {
+                height: 100px;
+                width: 100px;
+            }
+
+            .place-card { margin-bottom: 100px; }
         </style>
         
         <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
         <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
-        <section class="hero is-info">
-            <div class="hero-body gm-header">
-                    <h1 class="title">
-                        {{selectedPlace.name}} <a href="/places/{{queryParams.from}}"><span class="tag is-success back-button">Back</span></a>
-                    </h1>
-                    <div>
-                        {{selectedPlace.description}}
-                    </div>
+        <div class="place-card">
+            <section class="hero is-info">
+                <div class="hero-body gm-header">
+                        <h1 class="title">
+                            {{selectedPlace.name}} <a href="/places/{{queryParams.from}}"><span class="tag is-success back-button">Back</span></a>
+                        </h1>
+                        <div>
+                            {{selectedPlace.description}}
+                        </div>
+                </div>
+            </section>
+            <div class="long-description" inner-h-t-m-l="{{selectedPlace.longDescription}}">
             </div>
-        </section>
-        <div class="long-description" inner-h-t-m-l="{{selectedPlace.longDescription}}">
         </div>
-        <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+        <div class="photo-gallery">
+            <template is="dom-repeat" items="{{selectedPlace.images}}">
+                <img class="photo" src="{{item.url}}" on-click="onImageClick" >
+            </template>
+    </div>
+    <photo-swipe id="photoSwipe">
+    </photo-swipe>
+    <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
     </template>
     <script>
         class PlaceCard extends Polymer.Element {
 
             toJson(obj) {
                 return JSON.stringify(obj);
+            }
+
+            onImageClick() {
+                this.$.photoSwipe.openPhotoSwipe(this.selectedPlace.images, 1);
             }
 
             onBackButtonClick() {
