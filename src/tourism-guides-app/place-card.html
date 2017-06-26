@@ -72,7 +72,6 @@
             }
 
             onImageClick() {
-                // this.$.photoSwipe.openPhotoSwipe(this.selectedPlace.images, 1);
                 this.dispatchEvent(new CustomEvent('image-selected', {
                     detail: {
                         images: this.selectedPlace.images,

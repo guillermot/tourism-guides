@@ -98,7 +98,6 @@
             }
 
             onImageSelected(parameters) {
-                console.log(parameters);
                 this.dispatchEvent(new CustomEvent('image-selected', {
                     detail: parameters.detail
                 }));
