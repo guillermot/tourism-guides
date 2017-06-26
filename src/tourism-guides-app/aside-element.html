@@ -80,7 +80,7 @@
             <iron-pages id="iron" selected="[[data.page]]" on-iron-select="onIronActivate" class="content scrollbar" attr-for-selected="path" fallback-selection="bar-url">
                 <guide-list id="guideList" path="" on-guide-click="onGuideClick" guides="{{guides}}"></guide-list>
                 <place-list id="placeList" path="places" on-place-click="onPlaceClick" on-back-button-click="onPlaceListBackClick" selected-guide="{{selectedGuide}}"></place-list>
-                <place-card id="placeCard" path="place" selected-place="{{selectedPlace}}"></place-card>
+                <place-card id="placeCard" path="place" on-image-selected="onImageSelected" selected-place="{{selectedPlace}}"></place-card>
                 <bar-url id="bar-url" path="bar-url"></bar-url>
             </iron-pages>
         </div>
@@ -95,6 +95,13 @@
                 super.ready();
                 this.setIronAnimationEndHandler();
                 this.setIronContainerAnimationEndHandler();
+            }
+
+            onImageSelected(parameters) {
+                console.log(parameters);
+                this.dispatchEvent(new CustomEvent('image-selected', {
+                    detail: parameters.detail
+                }));
             }
 
             setIronAnimationEndHandler() {

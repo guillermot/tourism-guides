@@ -3,7 +3,6 @@
     <template>
         <link rel="stylesheet" href="../../bower_components/photoswipe/dist/photoswipe.css">
         <link rel="stylesheet" href="../../bower_components/photoswipe/dist/default-skin/default-skin.css">
-        <button type="button" on-click="onOpenPhotoSwipe">Open PhotoSwipe</button>
         <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
             <!-- Background of PhotoSwipe. 
@@ -75,6 +74,7 @@
     <script>
         class PhotoSwipeElement extends Polymer.Element {
             openPhotoSwipe(images, openAt) {
+                console.log(images, openAt);
                 var pswpElement = this.root.querySelectorAll('.pswp')[0];
                 let items = [];
 
@@ -89,7 +89,8 @@
 
                 // define options (if needed)
                 var options = {
-                    index: openAt // start at first slide
+                    index: openAt,
+                    modal: false
                 };
 
                 // Initializes and opens PhotoSwipe

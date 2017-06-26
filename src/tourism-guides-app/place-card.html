@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
-<link rel="import" href="/src/tourism-guides-app/photo-swipe.html">
 
 <dom-module id="place-card">
     <template>
@@ -63,8 +62,6 @@
                 <img class="photo" src="{{item.url}}" on-click="onImageClick" >
             </template>
     </div>
-    <photo-swipe id="photoSwipe">
-    </photo-swipe>
     <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
     </template>
     <script>
@@ -75,7 +72,13 @@
             }
 
             onImageClick() {
-                this.$.photoSwipe.openPhotoSwipe(this.selectedPlace.images, 1);
+                // this.$.photoSwipe.openPhotoSwipe(this.selectedPlace.images, 1);
+                this.dispatchEvent(new CustomEvent('image-selected', {
+                    detail: {
+                        images: this.selectedPlace.images,
+                        index: 1
+                    }
+                }));
             }
 
             onBackButtonClick() {

@@ -3,6 +3,7 @@
 <link rel="import" href="/src/tourism-guides-app/g-map.html">
 <link rel="import" href="/src/tourism-guides-app/aside-element.html">
 <link rel="import" href="/src/tourism-guides-app/light-box.html">
+<link rel="import" href="/src/tourism-guides-app/photo-swipe.html">
 
 <dom-module id="tourism-guides-app">
     <template>
@@ -15,13 +16,24 @@
             .gmap{
                 /*z-index: 0;*/
             }
+
+            #photoSwipeContainer { position: absolute; top:0; right: 0px; left: 400px; bottom: 0px;  } 
         </style>
-        <aside-element id="aside" class="aside-element" on-add-marker="onAddMarker" on-map-pan-to="onMapPanTo" on-clean-map="onCleanMap"></aside-element>
+        <aside-element id="aside" class="aside-element" on-image-selected="onImageSelected" on-add-marker="onAddMarker" on-map-pan-to="onMapPanTo" on-clean-map="onCleanMap"></aside-element>
         <g-map id="gmap" class="gmap"></g-map>
+        <div id="photoSwipeContainer">
+            <photo-swipe id="photoSwipe">
+            </photo-swipe>
+        </div>
     </template>
 
     <script>
         class TourismGuidesApp extends Polymer.Element {
+
+            onImageSelected(parameters) {
+                this.$.photoSwipe.openPhotoSwipe(parameters.detail.images, parameters.detail.index);
+            }
+
             onMapPanTo(event) {
                 this.$.gmap.markerPanTo(event.detail);
             }
