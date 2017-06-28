@@ -8,23 +8,20 @@
 <dom-module id="tourism-guides-app">
     <template>
         <style>
-            .aside-element{
+            .aside-element {
                 z-index: 1;
                 background-color: white;
             }
 
-            .gmap{
-                /*z-index: 0;*/
+            .gmap {
+                z-index: 0;
             }
-
-            #photoSwipeContainer { position: absolute; top:0; right: 0px; left: 400px; bottom: 0px;  } 
         </style>
-        <aside-element id="aside" class="aside-element" on-image-selected="onImageSelected" on-add-marker="onAddMarker" on-map-pan-to="onMapPanTo" on-clean-map="onCleanMap"></aside-element>
+        <aside-element id="aside" class="aside-element" on-image-selected="onImageSelected" on-add-marker="onAddMarker" on-map-pan-to="onMapPanTo"
+            on-clean-map="onCleanMap"></aside-element>
         <g-map id="gmap" class="gmap"></g-map>
-        <div id="photoSwipeContainer">
-            <photo-swipe id="photoSwipe">
-            </photo-swipe>
-        </div>
+        <photo-swipe id="photoSwipe">
+        </photo-swipe>
     </template>
 
     <script>
