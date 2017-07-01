@@ -75,6 +75,7 @@
 
             onPlaceClick(event) {
                 const placeClicked = event.model.item;
+                console.log(placeClicked);
                 if (placeClicked.lat) {
                     this.dispatchEvent(new CustomEvent('place-click', {
                         detail: event.model.item

@@ -118,7 +118,6 @@
             setIronContainerAnimationEndHandler() {
                 const self = this;
                 this.$.asider.addEventListener('animationend', function(event) {
-                    console.log(event.animationName);
                     switch (event.animationName) {
                         case self.toggleButtonOutTransitionClass:
                             self.$.toggleButton.transitionOutEnd();
@@ -186,7 +185,6 @@
 
             playSectionTransition() {
                 const classes = ' animated ' + this.sectionTransitionClass;
-                console.log(classes);
                 this.$.iron.classList += classes;
             }
 
