@@ -9,32 +9,42 @@
                 margin-bottom: 5px !important;
                 cursor: pointer;
             }
-            
-            .gm-header
-            {
+
+            .gm-header {
                 padding-bottom: 20px !important;
                 padding-top: 20px !important;
             }
 
-            .hero-body .title { padding-left: 25px; }
-            .hero-body div { padding-left: 25px; margin-top: -20px;  }
+            .hero-body .title {
+                padding-left: 25px;
+            }
 
-            .back-button { float: right; margin-right: 20px; margin-top: 8px; cursor: pointer; }
+            .hero-body div {
+                padding-left: 25px;
+                margin-top: -20px;
+            }
+
+            .back-button {
+                float: right;
+                margin-right: 20px;
+                margin-top: 8px;
+                cursor: pointer;
+            }
         </style>
-        
+
         <link rel="stylesheet" href="../../bower_components/bulma/css/bulma.css">
         <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
         <section id="section" class="hero is-warning">
             <div class="hero-body gm-header">
-                    <h1 class="title">
-                        {{selectedGuide.name}} <a href="/" on-click="onBackButtonClick" ><span class="tag is-info back-button">Back</span></a>
-                    </h1>
-                    <div>
-                        {{selectedGuide.description}}
-                    </div>
+                <h1 class="title">
+                    {{selectedGuide.name}} <a href="/" on-click="onBackButtonClick"><span class="tag is-info back-button">Back</span></a>
+                </h1>
+                <div>
+                    {{selectedGuide.description}}
+                </div>
             </div>
         </section>
-        
+
         <template is="dom-repeat" items="[[selectedGuide.places]]">
             <a href="/place/{{item.id}}?from={{selectedGuide.code}}">
                 <div class="box" on-click="onPlaceClick">
@@ -75,12 +85,10 @@
 
             onPlaceClick(event) {
                 const placeClicked = event.model.item;
-                console.log(placeClicked);
-                if (placeClicked.lat) {
-                    this.dispatchEvent(new CustomEvent('place-click', {
-                        detail: event.model.item
-                    }));
-                }
+                
+                this.dispatchEvent(new CustomEvent('place-click', {
+                    detail: event.model.item
+                }));
             }
 
             onBackButtonClick() {

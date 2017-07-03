@@ -37,12 +37,25 @@
                 type: 'area',
                 name: 'Chinatown',
                 description: 'Iconic Midtown business complex',
-                img: '/src/assets/img/manhattan/chinatown.jpg'
+                longDescription: 'Iconic Midtown business complex',
+                img: '/src/assets/img/manhattan/chinatown.jpg',
+                images: [{
+                    url: '/src/assets/img/first-visit/top-of-the-rock.jpg',
+                    width: 594,
+                    height: 360,
+                    description: 'The observation deck atop the skyscraper, dubbed "Top of the Rock"'
+                }, {
+                    url: '/src/assets/img/first-visit/rockefeller-center-christmas-tree.jpg',
+                    width: 648,
+                    height: 350,
+                    description: 'The Rockefeller Center Christmas Tree is a large Christmas tree placed annually in Rockefeller Center'
+                }]
             }, {
                 id: 4,
                 type: 'place',
                 name: 'Grand Central Terminal',
                 description: 'Iconic Midtown business complex',
+                longDescription: 'Iconic Midtown business complex',
                 img: '/src/assets/img/manhattan/gran-central-terminal.jpg',
                 lat: 40.752954,
                 lng: -73.977208
@@ -51,6 +64,7 @@
                 type: 'place',
                 name: 'Brooklyn Bridge',
                 description: 'Iconic Midtown business complex',
+                longDescription: 'Iconic Midtown business complex',
                 img: '/src/assets/img/manhattan/brookyn-bridge.jpg',
                 lat: 40.706574,
                 lng: -73.996810
@@ -59,6 +73,7 @@
                 type: 'place',
                 name: 'Statue of Liberty',
                 description: 'Iconic Midtown business complex',
+                longDescription: 'Iconic Midtown business complex',
                 img: '/src/assets/img/manhattan/statue-of-liberty.jpg',
                 lat: 40.689225,
                 lng: -74.044533
@@ -67,6 +82,7 @@
                 type: 'area',
                 name: 'High Line',
                 description: 'Iconic Midtown business complex',
+                longDescription: 'Iconic Midtown business complex',
                 img: '/src/assets/img/manhattan/high-line.jpg'
             }]
         }, {
@@ -190,7 +206,7 @@
                 img: '/src/assets/img/manhattan/high-line.jpg',
                 lat: 40.722913,
                 lng: -74.000018
-            }, ]
+            },]
         }];
 
         class GuideData extends Polymer.Element {

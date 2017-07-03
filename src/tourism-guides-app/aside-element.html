@@ -97,10 +97,43 @@
                 this.setIronContainerAnimationEndHandler();
             }
 
+            onPlaceClick(event) {
+                const placeClicked = event.detail;
+
+                this.dispatchEvent(new CustomEvent('map-pan-to', {
+                    detail: {
+                        lat: placeClicked.lat,
+                        lng: placeClicked.lng
+                    }
+                }));
+
+                this.selectedPlace = placeClicked;
+            }
+
+            onGuideClick(event) {
+                const selectedGuide = event.detail;
+
+                const markers = selectedGuide.places.forEach(function(place) {
+                    if (place.lat)
+                        this.dispatchEvent(new CustomEvent('add-marker', {
+                            detail: {
+                                lat: place.lat,
+                                lng: place.lng
+                            }
+                        }));
+                }, this);
+
+                this.selectedGuide = selectedGuide;
+            }
+
             onImageSelected(parameters) {
                 this.dispatchEvent(new CustomEvent('image-selected', {
                     detail: parameters.detail
                 }));
+            }
+
+            onPlaceListBackClick() {
+                this.dispatchEvent(new CustomEvent("clean-map"));
             }
 
             setIronAnimationEndHandler() {
@@ -167,42 +200,9 @@
                 this.playSectionTransition();
             }
 
-            onGuideClick(event) {
-                const selectedGuide = event.detail;
-
-                const markers = selectedGuide.places.forEach(function(place) {
-                    if (place.lat)
-                        this.dispatchEvent(new CustomEvent('add-marker', {
-                            detail: {
-                                lat: place.lat,
-                                lng: place.lng
-                            }
-                        }));
-                }, this);
-
-                this.selectedGuide = selectedGuide;
-            }
-
             playSectionTransition() {
                 const classes = ' animated ' + this.sectionTransitionClass;
                 this.$.iron.classList += classes;
-            }
-
-            onPlaceListBackClick() {
-                this.dispatchEvent(new CustomEvent("clean-map"));
-            }
-
-            onPlaceClick(event) {
-                const placeClicked = event.detail;
-
-                this.dispatchEvent(new CustomEvent('map-pan-to', {
-                    detail: {
-                        lat: placeClicked.lat,
-                        lng: placeClicked.lng
-                    }
-                }));
-
-                this.selectedPlace = placeClicked;
             }
 
             static get is() {
